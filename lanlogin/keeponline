@@ -1,0 +1,33 @@
+#!/bin/bash
+# /etc/init.d/keeponline
+### BEGIN INIT INFO
+# Provides: anyint
+# Short-Description: keep the pc online
+# Description: This service is used to keep the pc online in nimte
+### END INIT INFO
+start()
+	{
+        echo "Starting Keep On Line"
+        /home/admint/bin/keeponline.py &
+         }
+stop()
+	{
+        echo "Stopping keeponline"
+        #killall keeponline.py
+        kill $(ps aux | grep -m 1 'python3 /home/admint/bin/keeponline.py' | awk '{ print $2 }')
+        }
+case "$1" in
+    start)
+    start
+    ;;
+    stop)
+    stop
+    ;;
+    restart)
+    stop
+    start
+    ;;
+    *)
+esac
+
+exit 0
